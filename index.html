@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin - Dashboard</title>
+    <title>MPa Web GIS</title>
 
     <!-- Bootstrap core CSS-->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -23,6 +23,17 @@
     <!-- Custom styles for this template-->
     <link href="css/sb-admin.css" rel="stylesheet">
 
+    <!-- ESRI API CSS -->
+    <link rel="stylesheet" href="https://js.arcgis.com/4.10/esri/css/main.css">
+    <style>
+    html, body, #viewDiv 
+    {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    }
+  </style>
   </head>
 
   <body id="page-top">
@@ -84,51 +95,12 @@
             <span>Tables</span></a>
         </li>
       </ul>
-
       <div id="content-wrapper">
-        <div class="container-fluid">
-  
+        <div id="viewDiv"class="container-fluid">
         </div>
-        <!-- /.container-fluid -->
-        <!-- Sticky Footer -->
-        <footer class="sticky-footer">
-          <div class="container my-auto">
-            <div class="copyright text-center my-auto">
-              <span>Copyright © MPa Web GIS 2019</span>
-            </div>
-          </div>
-        </footer>
-
       </div>
-      <!-- /.content-wrapper -->
-
     </div>
     <!-- /#wrapper -->
-
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-      <i class="fas fa-angle-up"></i>
-    </a>
-
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-          <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="login.html">Logout</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -144,10 +116,37 @@
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin.min.js"></script>
 
-    <!-- Demo scripts for this page-->
-    <script src="js/demo/datatables-demo.js"></script>
-    <script src="js/demo/chart-area-demo.js"></script>
+    <!-- ESRI JS -->
+    <script src="https://js.arcgis.com/4.10/"></script>
+    <script>
+      require([
+        "esri/Map",
+        "esri/views/MapView",
+        "esri/widgets/Compass",
+        "esri/widgets/BasemapToggle"
+      ], function(Map, MapView, Compass,BasemapToggle){
+        var map = new Map({
+          basemap: "hybrid"
+        });
+        var view = new MapView({
+          container: "viewDiv",  // Reference to the scene div created in step 5
+          map: map,  // Reference to the map object created before the scene
+          zoom: 7,  // Sets zoom level based on level of detail (LOD)
+          center: [19.86, 45.268]  // Sets center point of view using longitude,latitude
+        });
+        var compass = new Compass({
+  view: view
+});
+var basemapToggle = new BasemapToggle({
+  view: view,  // The view that provides access to the map's "streets" basemap
+  nextBasemap: "topo"  // Allows for toggling to the "hybrid" basemap
+});
+// adds the compass to the top left corner of the MapView
+view.ui.add(compass, "top-left");
+view.ui.add(basemapToggle, "top-right");
 
+      });
+      </script>
   </body>
 
 </html>
