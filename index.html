@@ -39,7 +39,6 @@
   <body id="page-top">
 
     <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
-
       <a class="navbar-brand mr-1" href="index.html">MPa Web GIS</a>
 
       <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
@@ -47,14 +46,8 @@
       </button>
 
       <!-- Navbar Search -->
-      <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
-        <div class="input-group">
-          <input type="text" class="form-control" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-          <div class="input-group-append">
-            <button class="btn btn-primary" type="button">
-              <i class="fas fa-search"></i>
-            </button>
-          </div>
+  <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+        <div class="input-group" id="searchControl">
         </div>
       </form>
     </nav>
@@ -70,8 +63,8 @@
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-fw fa-folder"></i>
-            <span>Pages</span>
+            <i class="fas fa-clone"></i>
+            <span>LAYER 1</span>
           </a>
           <div class="dropdown-menu" aria-labelledby="pagesDropdown">
             <h6 class="dropdown-header">Login Screens:</h6>
@@ -86,13 +79,13 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" href="charts.html">
-            <i class="fas fa-fw fa-chart-area"></i>
-            <span>Charts</span></a>
+            <i class="fas fa-clone"></i>
+            <span>LAYER 2</span></a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="tables.html">
-            <i class="fas fa-fw fa-table"></i>
-            <span>Tables</span></a>
+            <i class="fas fa-clone"></i>
+            <span>LAYER 3</span></a>
         </li>
       </ul>
       <div id="content-wrapper">
@@ -123,8 +116,9 @@
         "esri/Map",
         "esri/views/MapView",
         "esri/widgets/Compass",
-        "esri/widgets/BasemapToggle"
-      ], function(Map, MapView, Compass,BasemapToggle){
+        "esri/widgets/BasemapToggle",
+        "esri/widgets/Search"
+      ], function(Map, MapView, Compass,BasemapToggle,Search){
         var map = new Map({
           basemap: "hybrid"
         });
@@ -141,9 +135,18 @@ var basemapToggle = new BasemapToggle({
   view: view,  // The view that provides access to the map's "streets" basemap
   nextBasemap: "topo"  // Allows for toggling to the "hybrid" basemap
 });
+
+//Search widget
+var searchWidget = new Search({
+  view: view,
+  container:"searchControl"
+});
 // adds the compass to the top left corner of the MapView
 view.ui.add(compass, "top-left");
+
+//adds the basemap change to the top right corner of the MapView
 view.ui.add(basemapToggle, "top-right");
+
 
       });
       </script>
